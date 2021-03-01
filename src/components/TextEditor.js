@@ -147,7 +147,7 @@ export default class TextEditor extends Component {
             className='c-toolbar__tooltip-button'>
             <Icon icon={code} />
           </button>
-          <div className="divider"></div>
+          <div className="u-divider"></div>
           <button
             onPointerDown={(e) => this.onMarkClick(e, 'bold')}
             className='c-toolbar__tooltip-button'>
@@ -168,7 +168,7 @@ export default class TextEditor extends Component {
             className='c-toolbar__tooltip-button'>
             <Icon icon={link2} />
           </button>
-          <div className="divider"></div>
+          <div className="u-divider"></div>
           <button
             onPointerDown={(e) => this.onMarkClick(e, 'alignLeft')}
             className='c-toolbar__tooltip-button'>
@@ -184,7 +184,7 @@ export default class TextEditor extends Component {
             className='c-toolbar__tooltip-button'>
             <Icon icon={alignRight} />
           </button>
-          <div className="divider"></div>
+          <div className="u-divider"></div>
           <button
             onPointerDown={(e) => this.onMarkClick(e, 'list')}
             className='c-toolbar__tooltip-button'>
