@@ -12,8 +12,11 @@ import { link2 } from 'react-icons-kit/feather/link2'
 import { alignLeft } from 'react-icons-kit/feather/alignLeft'
 import { alignCenter } from 'react-icons-kit/feather/alignCenter'
 import { alignRight } from 'react-icons-kit/feather/alignRight'
+import { type } from 'react-icons-kit/feather/type'
 
-import { BoldMark, ItalicMark, FormatToolbar } from "./index"
+import { BoldMark, ItalicMark, FormatToolbar, AlignCenter } from "./index"
+import AlignLeft from './AlignLeft'
+import AlignRight from './AlignRight'
 
 const initialValue = Value.fromJSON({
   document: {
@@ -67,7 +70,7 @@ export default class TextEditor extends Component {
         return true
       }
 
-      case 'l': {
+      case 'k': {
         change.toggleMark('list')
         return true
       }
@@ -79,6 +82,26 @@ export default class TextEditor extends Component {
 
       case 'a': {
         change.toggleMark('link')
+        return true
+      }
+
+      case 'h': {
+        change.toggleMark('heading')
+        return true
+      }
+
+      case 'e': {
+        change.toggleMark('center')
+        return true
+      }
+
+      case 'l': {
+        change.toggleMark('left')
+        return true
+      }
+
+      case 'r': {
+        change.toggleMark('right')
         return true
       }
     
@@ -116,6 +139,14 @@ export default class TextEditor extends Component {
             { props.children }
           </a> 
         )
+      case 'heading':
+        return <h2 { ...props.attributes }>{ props.children }</h2>
+      case 'left':
+        return <AlignLeft { ...props } />
+      case 'center':
+        return <AlignCenter { ...props } />
+      case 'right':
+        return <AlignRight { ...props } />
       case 'blockquote':
         return (
           <blockquote { ...props.attributes }>
@@ -136,6 +167,8 @@ export default class TextEditor extends Component {
     const change = value.change().toggleMark(type)
 
     this.onChange(change)
+
+    console.log("onMarkClick() => " + change);
   }
 
   render() {
@@ -148,6 +181,11 @@ export default class TextEditor extends Component {
             <Icon icon={code} />
           </button>
           <div className="u-divider"></div>
+          <button
+            onPointerDown={(e) => this.onMarkClick(e, 'heading')}
+            className='c-toolbar__tooltip-button'>
+            <Icon icon={type} />
+          </button>
           <button
             onPointerDown={(e) => this.onMarkClick(e, 'bold')}
             className='c-toolbar__tooltip-button'>
@@ -170,17 +208,17 @@ export default class TextEditor extends Component {
           </button>
           <div className="u-divider"></div>
           <button
-            onPointerDown={(e) => this.onMarkClick(e, 'alignLeft')}
+            onPointerDown={(e) => this.onMarkClick(e, 'left')}
             className='c-toolbar__tooltip-button'>
             <Icon icon={alignLeft} />
           </button>
           <button
-            onPointerDown={(e) => this.onMarkClick(e, 'alignCenter')}
+            onPointerDown={(e) => this.onMarkClick(e, 'center')}
             className='c-toolbar__tooltip-button'>
             <Icon icon={alignCenter} />
           </button>
           <button
-            onPointerDown={(e) => this.onMarkClick(e, 'alignRight')}
+            onPointerDown={(e) => this.onMarkClick(e, 'right')}
             className='c-toolbar__tooltip-button'>
             <Icon icon={alignRight} />
           </button>
