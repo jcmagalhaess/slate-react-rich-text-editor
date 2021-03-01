@@ -2,7 +2,7 @@ import React from 'react'
 
 const BoldMark = props => (
   <strong>
-    {props.children}
+    { props.children }
   </strong>
 )
 
