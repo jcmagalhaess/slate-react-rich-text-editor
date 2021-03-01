@@ -1,0 +1,14 @@
+.c-toolbar {
+  display: flex;
+  padding: 0 10px;
+  margin: 0 auto 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px #ddd;
+  &__tooltip-button {
+    border: 0;
+    background: none;
+    cursor: pointer;
+    padding: 10px 5px;
+    color: #32323A;
+  }
+}

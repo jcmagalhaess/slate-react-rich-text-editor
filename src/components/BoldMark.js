@@ -1,6 +1,6 @@
 import React from 'react'
 
-const BoldMark = props => (
+const BoldMark = (props) => (
   <strong>
     { props.children }
   </strong>

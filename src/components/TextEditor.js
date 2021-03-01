@@ -4,10 +4,14 @@ import { Value } from 'slate'
 
 import Icon from 'react-icons-kit'
 import { bold } from 'react-icons-kit/feather/bold'
-import { italic } from "react-icons-kit/feather/italic"
-import { code } from "react-icons-kit/feather/code"
-import { list } from "react-icons-kit/feather/list"
-import { underline } from "react-icons-kit/feather/underline"
+import { italic } from 'react-icons-kit/feather/italic'
+import { code } from 'react-icons-kit/feather/code'
+import { list } from 'react-icons-kit/feather/list'
+import { underline } from 'react-icons-kit/feather/underline'
+import { link2 } from 'react-icons-kit/feather/link2'
+import { alignLeft } from 'react-icons-kit/feather/alignLeft'
+import { alignCenter } from 'react-icons-kit/feather/alignCenter'
+import { alignRight } from 'react-icons-kit/feather/alignRight'
 
 import { BoldMark, ItalicMark, FormatToolbar } from "./index"
 
@@ -22,7 +26,7 @@ const initialValue = Value.fromJSON({
             object: 'text',
             leaves: [
               {
-                text: 'My first paragraph',
+                text: '',
               }
             ]
           }
@@ -72,6 +76,11 @@ export default class TextEditor extends Component {
         change.toggleMark('underline')
         return true
       }
+
+      case 'a': {
+        change.toggleMark('link')
+        return true
+      }
     
       default:
         break;
@@ -96,6 +105,24 @@ export default class TextEditor extends Component {
         )
       case 'underline':
         return <u { ...props.attributes }>{ props.children }</u>
+      case 'link':
+        return (
+          <a
+            href={ prompt('Adicione sua URL:') }
+            target='_blank'
+            rel="noreferrer"
+            { ...props.attributes }
+          >
+            { props.children }
+          </a> 
+        )
+      case 'blockquote':
+        return (
+          <blockquote { ...props.attributes }>
+            { props.children }
+          </blockquote>
+        )
+
       default:
         break;
     }
@@ -116,6 +143,12 @@ export default class TextEditor extends Component {
       <Fragment>
         <FormatToolbar>
           <button
+            onPointerDown={(e) => this.onMarkClick(e, 'code')}
+            className='c-toolbar__tooltip-button'>
+            <Icon icon={code} />
+          </button>
+          <div className="divider"></div>
+          <button
             onPointerDown={(e) => this.onMarkClick(e, 'bold')}
             className='c-toolbar__tooltip-button'>
             <Icon icon={bold} />
@@ -126,19 +159,36 @@ export default class TextEditor extends Component {
             <Icon icon={italic} />
           </button>
           <button
-            onPointerDown={(e) => this.onMarkClick(e, 'code')}
+            onPointerDown={(e) => this.onMarkClick(e, 'underline')}
             className='c-toolbar__tooltip-button'>
-            <Icon icon={code} />
+            <Icon icon={underline} />
           </button>
+          <button
+            onPointerDown={(e) => this.onMarkClick(e, 'link')}
+            className='c-toolbar__tooltip-button'>
+            <Icon icon={link2} />
+          </button>
+          <div className="divider"></div>
+          <button
+            onPointerDown={(e) => this.onMarkClick(e, 'alignLeft')}
+            className='c-toolbar__tooltip-button'>
+            <Icon icon={alignLeft} />
+          </button>
+          <button
+            onPointerDown={(e) => this.onMarkClick(e, 'alignCenter')}
+            className='c-toolbar__tooltip-button'>
+            <Icon icon={alignCenter} />
+          </button>
+          <button
+            onPointerDown={(e) => this.onMarkClick(e, 'alignRight')}
+            className='c-toolbar__tooltip-button'>
+            <Icon icon={alignRight} />
+          </button>
+          <div className="divider"></div>
           <button
             onPointerDown={(e) => this.onMarkClick(e, 'list')}
             className='c-toolbar__tooltip-button'>
             <Icon icon={list} />
-          </button>
-          <button
-            onPointerDown={(e) => this.onMarkClick(e, 'underline')}
-            className='c-toolbar__tooltip-button'>
-            <Icon icon={underline} />
           </button>
         </FormatToolbar>
         <Editor

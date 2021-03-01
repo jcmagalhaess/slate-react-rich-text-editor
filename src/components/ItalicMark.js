@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ItalicMark = props => (
+const ItalicMark = (props) => (
   <em>
     { props.children } 
   </em>

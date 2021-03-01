@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { TextEditor } from './components'
-import './scss/main.scss';
+import './assets/scss/main.scss';
 
 class App extends Component {
   render() {
