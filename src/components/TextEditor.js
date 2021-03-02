@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Editor } from 'slate-react'
 import { Value } from 'slate'
+import ReactToPrint, { PrintContextConsumer } from 'react-to-print';
 
 import Icon from 'react-icons-kit'
 import { bold } from 'react-icons-kit/feather/bold'
@@ -14,6 +15,7 @@ import { alignCenter } from 'react-icons-kit/feather/alignCenter'
 import { alignRight } from 'react-icons-kit/feather/alignRight'
 import { type } from 'react-icons-kit/feather/type'
 import { maximize2 } from 'react-icons-kit/feather/maximize2'
+import { download } from 'react-icons-kit/feather/download'
 
 import { BoldMark, ItalicMark, FormatToolbar, AlignCenter } from "./index"
 import AlignLeft from './AlignLeft'
@@ -44,7 +46,10 @@ export default class TextEditor extends Component {
 
   state = {
     value: initialValue,
+    maximize: false
   }
+
+  handleChange = e => this.setState({ [e.target.name]: e.target.value });
 
   onChange = ({ value }) => {
     this.setState({ value })
@@ -154,6 +159,10 @@ export default class TextEditor extends Component {
             { props.children }
           </blockquote>
         )
+      case 'maximize':
+        return (
+          this.maximize( ...props )
+        )
 
       default:
         break;
@@ -169,12 +178,9 @@ export default class TextEditor extends Component {
 
     this.onChange(change)
   }
-
-  maximize = props => {
-    console.log('Maximize')
-  }
-
+  
   render() {
+    var handler = this.props.handler
     return (
       <Fragment>
         <Editor
@@ -184,6 +190,7 @@ export default class TextEditor extends Component {
           onKeyDown={this.onKeyDown}
           renderMark={this.renderMark}
           placeholder='Notes'
+          ref={el => (this.componentRef = el)}
         />
         <FormatToolbar>
           <button
@@ -236,15 +243,33 @@ export default class TextEditor extends Component {
           </button>
           <button
             onPointerDown={(e) => this.onMarkClick(e, 'link')}
-            className='c-toolbar__tooltip-button'>
+            className='c-toolbar__tooltip-button'
+            disabled
+          >
             <Icon icon={link2} />
           </button>
           <div className="u-divider"></div>
           <button
-            onPointerDown={(e) => this.onMarkClick(e, 'maximize')}
-            className='c-toolbar__tooltip-button'>
+            onClick={() => handler('maximize')}
+            className='c-toolbar__tooltip-button'
+          >
             <Icon icon={maximize2} />
           </button>
+          {/* Printer */}
+          <ReactToPrint
+            content={() => this.componentRef}
+            pageStyle={'@media print {code {background-color: #2b303b;}} @page { font-size: 30px; size: A4; margin: 200mm !important}'}
+          >
+            <PrintContextConsumer>
+              {({ handlePrint }) => (
+                <button
+                  onClick={handlePrint}
+                  className='c-toolbar__tooltip-button'>
+                  <Icon icon={download} />
+                </button>
+              )}
+            </PrintContextConsumer>
+          </ReactToPrint>
         </FormatToolbar>
       </Fragment>
     )

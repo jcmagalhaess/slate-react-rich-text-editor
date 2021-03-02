@@ -1,7 +1,10 @@
 $component-name: 'c-card';
 .#{$component-name} {
   --padding: 30px;
-  width: calc(50vw - (var(--padding) * 2));
+  --width: calc(70vw - (var(--padding) * 2));
+  --width-maximize: calc(var(--width) + 30vw);
+  --height-maximize: calc(100vh - ((var(--padding)/2) + var(--padding)));
+  width: var(--width);
   padding: var(--padding);
   padding-bottom: calc(var(--padding)/2);
   background-color: #fff;
@@ -9,10 +12,24 @@ $component-name: 'c-card';
   box-shadow: 0 0 10px #ddd;
   font-size: x-large;
   color: #323232;
+  &--maximize {
+    width: var(--width-maximize);
+    height: var(--height-maximize);
+    border-radius: 0;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-between;
+    .#{$component-name}__editor {
+      width: calc(var(--width-maximize));
+      height: var(--height-maximize);
+    }
+  }
   &__editor {
     --height: 150px;
+    --height-maximize: 100vh;
     min-height: var(--height);
-    max-height: var(--height);
+    max-height: 80vh;
     overflow-y: scroll;
     display: flex;
     flex-flow: column;

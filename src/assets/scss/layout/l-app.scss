@@ -7,4 +7,8 @@ $layout-name: 'l-app';
   flex-flow: column;
   align-items: center;
   justify-content: center;
+  &--maximize {
+    width: 100vw;
+    height: 100vh;
+  }
 }
