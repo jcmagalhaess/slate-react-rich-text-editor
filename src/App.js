@@ -6,7 +6,9 @@ class App extends Component {
   render() {
     return (
       <div className='l-app'>
-        <TextEditor />
+        <div className="c-card">
+          <TextEditor />
+        </div>
       </div>
     )
   }

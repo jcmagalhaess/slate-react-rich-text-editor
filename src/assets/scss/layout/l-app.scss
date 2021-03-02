@@ -1,10 +1,10 @@
-.l-app {
-  width: 80vw;
+$layout-name: 'l-app';
+.#{$layout-name} {
+  width: 100vw;
+  height: 100vh;
   color: #32323A;
-  max-width: 740px;
-  padding: 10px;
-  margin: auto;
-  border-radius: 4.5px;
   display: flex;
   flex-flow: column;
+  align-items: center;
+  justify-content: center;
 }

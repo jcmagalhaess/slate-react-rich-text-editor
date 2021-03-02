@@ -1,0 +1,23 @@
+$component-name: 'c-card';
+.#{$component-name} {
+  --padding: 30px;
+  width: calc(50vw - (var(--padding) * 2));
+  padding: var(--padding);
+  padding-bottom: calc(var(--padding)/2);
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ddd;
+  font-size: x-large;
+  color: #323232;
+  &__editor {
+    --height: 150px;
+    min-height: var(--height);
+    max-height: var(--height);
+    overflow-y: scroll;
+    display: flex;
+    flex-flow: column;
+    div {
+      margin: 5px 0;
+    }
+  }
+}

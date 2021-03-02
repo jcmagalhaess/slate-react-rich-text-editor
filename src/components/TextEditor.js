@@ -13,6 +13,7 @@ import { alignLeft } from 'react-icons-kit/feather/alignLeft'
 import { alignCenter } from 'react-icons-kit/feather/alignCenter'
 import { alignRight } from 'react-icons-kit/feather/alignRight'
 import { type } from 'react-icons-kit/feather/type'
+import { maximize2 } from 'react-icons-kit/feather/maximize2'
 
 import { BoldMark, ItalicMark, FormatToolbar, AlignCenter } from "./index"
 import AlignLeft from './AlignLeft'
@@ -109,7 +110,6 @@ export default class TextEditor extends Component {
         break;
     }
 
-    console.log(e.key)
   }
 
   renderMark = props => {
@@ -131,7 +131,8 @@ export default class TextEditor extends Component {
       case 'link':
         return (
           <a
-            href={ prompt('Adicione sua URL:') }
+            onClick={ console.log(props.mark.type) }
+            className={ props.mark.type }
             target='_blank'
             rel="noreferrer"
             { ...props.attributes }
@@ -167,13 +168,23 @@ export default class TextEditor extends Component {
     const change = value.change().toggleMark(type)
 
     this.onChange(change)
+  }
 
-    console.log("onMarkClick() => " + change);
+  maximize = props => {
+    console.log('Maximize')
   }
 
   render() {
     return (
       <Fragment>
+        <Editor
+          className='c-card__editor'
+          value={this.state.value}
+          onChange={this.onChange}
+          onKeyDown={this.onKeyDown}
+          renderMark={this.renderMark}
+          placeholder='Notes'
+        />
         <FormatToolbar>
           <button
             onPointerDown={(e) => this.onMarkClick(e, 'code')}
@@ -201,11 +212,6 @@ export default class TextEditor extends Component {
             className='c-toolbar__tooltip-button'>
             <Icon icon={underline} />
           </button>
-          <button
-            onPointerDown={(e) => this.onMarkClick(e, 'link')}
-            className='c-toolbar__tooltip-button'>
-            <Icon icon={link2} />
-          </button>
           <div className="u-divider"></div>
           <button
             onPointerDown={(e) => this.onMarkClick(e, 'left')}
@@ -228,14 +234,18 @@ export default class TextEditor extends Component {
             className='c-toolbar__tooltip-button'>
             <Icon icon={list} />
           </button>
+          <button
+            onPointerDown={(e) => this.onMarkClick(e, 'link')}
+            className='c-toolbar__tooltip-button'>
+            <Icon icon={link2} />
+          </button>
+          <div className="u-divider"></div>
+          <button
+            onPointerDown={(e) => this.onMarkClick(e, 'maximize')}
+            className='c-toolbar__tooltip-button'>
+            <Icon icon={maximize2} />
+          </button>
         </FormatToolbar>
-        <Editor
-          className='c-editor'
-          value={this.state.value}
-          onChange={this.onChange}
-          onKeyDown={this.onKeyDown}
-          renderMark={this.renderMark}
-        />
       </Fragment>
     )
   }

@@ -1,14 +1,11 @@
-.c-toolbar {
+$component-name: 'c-toolbar';
+.#{$component-name} {
   display: flex;
-  padding: 0 10px;
-  margin: 0 auto 10px;
-  background-color: #fff;
-  box-shadow: 0 0 10px #ddd;
+  margin-top: 10px;
   &__tooltip-button {
     border: 0;
     background: none;
     cursor: pointer;
-    padding: 10px 5px;
     color: #32323A;
   }
 }
