@@ -2,6 +2,6 @@ import TextEditor from './TextEditor'
 import BoldMark from './BoldMark'
 import ItalicMark from './ItalicMark'
 import FormatToolbar from './FormatToolbar'
-import AlignCenter from './AlignCenter'
+import Alignment from './Alignment'
 
-export { TextEditor, BoldMark, ItalicMark, FormatToolbar, AlignCenter }
+export { TextEditor, BoldMark, ItalicMark, FormatToolbar, Alignment }

@@ -17,9 +17,7 @@ import { type } from 'react-icons-kit/feather/type'
 import { maximize2 } from 'react-icons-kit/feather/maximize2'
 import { download } from 'react-icons-kit/feather/download'
 
-import { BoldMark, ItalicMark, FormatToolbar, AlignCenter } from "./index"
-import AlignLeft from './AlignLeft'
-import AlignRight from './AlignRight'
+import { BoldMark, ItalicMark, FormatToolbar, Alignment } from "./index"
 
 const initialValue = Value.fromJSON({
   document: {
@@ -148,11 +146,11 @@ export default class TextEditor extends Component {
       case 'heading':
         return <h2 { ...props.attributes }>{ props.children }</h2>
       case 'left':
-        return <AlignLeft { ...props } />
+        return <Alignment { ...props } />
       case 'center':
-        return <AlignCenter { ...props } />
+        return <Alignment { ...props } />
       case 'right':
-        return <AlignRight { ...props } />
+        return <Alignment { ...props } />
       case 'blockquote':
         return (
           <blockquote { ...props.attributes }>
@@ -190,6 +188,7 @@ export default class TextEditor extends Component {
           onKeyDown={this.onKeyDown}
           renderMark={this.renderMark}
           placeholder='Notes'
+          // ref={el => (this.componentRef = el)}
           ref={el => (this.componentRef = el)}
         />
         <FormatToolbar>
