@@ -42,9 +42,13 @@ const initialValue = Value.fromJSON({
 
 export default class TextEditor extends Component {
 
-  state = {
-    value: initialValue,
-    maximize: false
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: initialValue,
+      maximize: false,
+    }
   }
 
   handleChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -84,11 +88,6 @@ export default class TextEditor extends Component {
         return true
       }
 
-      case 'a': {
-        change.toggleMark('link')
-        return true
-      }
-
       case 'h': {
         change.toggleMark('heading')
         return true
@@ -115,10 +114,26 @@ export default class TextEditor extends Component {
 
   }
 
-  renderMark = props => {
+  onMarkClick = (e, type) => {
+    e.preventDefault()
+
+    const { value } = this.state
+
+    const change = value.change().toggleMark(type)
+
+    this.onChange(change)
+  }
+  
+  urlLink = (props) => {
+    if ( props.mark.type === 'link' ) {
+      const url = prompt('Type your link: ')
+      return url;
+    }
+  }
+  renderMark = (props) => {
     switch (props.mark.type) {
       case 'bold':
-        return <BoldMark { ...props } />    
+        return <BoldMark { ...props } />
       case 'italic':
         return <ItalicMark { ...props } />
       case 'code':
@@ -132,7 +147,7 @@ export default class TextEditor extends Component {
       case 'underline':
         return <u { ...props.attributes }>{ props.children }</u>
       case 'link':
-        return <LinkCustom { ...props } />
+        return <LinkCustom value={ this.urlLink({ ...props }) } { ...props } />
       case 'heading':
         return <h2 { ...props.attributes }>{ props.children }</h2>
       case 'left':
@@ -156,19 +171,11 @@ export default class TextEditor extends Component {
         break;
     }
   }
-
-  onMarkClick = (e, type) => {
-    e.preventDefault()
-
-    const { value } = this.state
-
-    const change = value.change().toggleMark(type)
-
-    this.onChange(change)
-  }
   
   render() {
+
     var handler = this.props.handler
+
     return (
       <Fragment>
         <Editor
@@ -232,7 +239,6 @@ export default class TextEditor extends Component {
           <button
             onPointerDown={(e) => this.onMarkClick(e, 'link')}
             className='c-toolbar__tooltip-button'
-            disabled
           >
             <Icon icon={link2} />
           </button>

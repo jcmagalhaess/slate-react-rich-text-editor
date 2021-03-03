@@ -14,8 +14,8 @@ class App extends Component {
   }
 
   handler() {
-    const currentState = this.state.maximize;
-    currentState ? this.setState({ maximize: false }) : this.setState({ maximize: true })
+    const maximize = this.state.maximize;
+    maximize ? this.setState({ maximize: false }) : this.setState({ maximize: true })
   }
 
   render() {

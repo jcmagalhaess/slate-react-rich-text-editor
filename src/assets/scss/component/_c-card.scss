@@ -1,6 +1,7 @@
 $component-name: 'c-card';
 .#{$component-name} {
   --padding: 30px;
+  --color: #323232;
   --width: calc(70vw - (var(--padding) * 2));
   --width-maximize: calc(var(--width) + 30vw);
   --height-maximize: calc(100vh - ((var(--padding)/2) + var(--padding)));
@@ -9,9 +10,8 @@ $component-name: 'c-card';
   padding-bottom: calc(var(--padding)/2);
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 0 10px #ddd;
+  box-shadow: 0 0 10px rgba($color: #323232, $alpha: 0.6);
   font-size: x-large;
-  color: #323232;
   &--maximize {
     width: var(--width-maximize);
     height: var(--height-maximize);

@@ -1,12 +1,13 @@
 import React from 'react'
-
 const LinkCustom = (props) => (
-  <span
-    className={ props.mark.type }
+  <a
+    href={ props.value }
+    className={`c-card__` + props.mark.type }
+    target='_blank'
+    rel="noreferrer"
   >
     { props.children }
-    <a href={ props.mark.type }>{ props.children }</a>
-  </span>
+  </a>
 )
 
 export default LinkCustom;
