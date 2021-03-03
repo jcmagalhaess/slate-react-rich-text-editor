@@ -18,7 +18,7 @@
 
 ## DEMO
 
-![](https://ibb.co/FbM9kB5)
+![](https://i.ibb.co/C5Zqpnb/rich-text-editor.png)
 
 https://react-slate-rich-text-editor.herokuapp.com/
 
@@ -31,7 +31,7 @@ An enriched text editor, just type, select the text and click on the functions b
 
 Open the terminal and type:
 
-### `git clone https://github.com/renatolinsjr/React-Calculadora.git`
+### `git clone https://github.com/jcmagalhaess/slate-react-rich-text-editor.git`
 
 Now that you were clone the project for your computer, will be need to install all dependencies for the to run application directly in localhost. To do this, type the command below and wait for the instalation to finish:
 
