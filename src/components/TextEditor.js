@@ -188,7 +188,6 @@ export default class TextEditor extends Component {
           onKeyDown={this.onKeyDown}
           renderMark={this.renderMark}
           placeholder='Notes'
-          // ref={el => (this.componentRef = el)}
           ref={el => (this.componentRef = el)}
         />
         <FormatToolbar>
