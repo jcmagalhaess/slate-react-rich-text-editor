@@ -19,7 +19,7 @@
     "react-to-print": "^2.12.3",
     "react-widgets": "^4.6.1",
     "slate": "^0.34.5",
-    "slate-react": "^0.59.0",
+    "slate-react": "^0.13.2",
     "web-vitals": "^1.1.0"
   },
   "scripts": {
