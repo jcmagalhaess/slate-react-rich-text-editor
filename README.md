@@ -1,6 +1,59 @@
-# Getting Started with Create React App
+# Rich Text Editor - React JS [Slate]
+> This project was created by Júlio Magalhães as an exercise of the React library and is being made available as a Portfolio, feel free to give Fork, Pull Request or report an error.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Summary
+
+- [Requirements](#Requirements) 
+- [Demonstration](#DEMO)
+- [How the Application Works](#How-the-application-works)
+- [Installation](#Installation)
+- [Social Networks and Portfolio](#Social-Media-and-Portfolio)
+- [React Documentation](#React-DOCS)
+
+## Requirements
+
++ [Node](https://nodejs.org/)
++ [NPM](https://www.npmjs.com/)
++ [React](https://reactjs.org/)
+
+## DEMO
+
+![](https://ibb.co/FbM9kB5)
+
+https://react-slate-rich-text-editor.herokuapp.com/
+
+
+## How the application works
+
+An enriched text editor, just type, select the text and click on the functions below to view the changes
+
+## Installation
+
+Open the terminal and type:
+
+### `git clone https://github.com/renatolinsjr/React-Calculadora.git`
+
+Now that you were clone the project for your computer, will be need to install all dependencies for the to run application directly in localhost. To do this, type the command below and wait for the instalation to finish:
+
+### `npm install`
+
+With the application cloned and all installed dependencies you can to execute the below command to begin the application:
+
+### `npm start`
+
+the application will run on the address http://localhost:3000/ - enjoy!
+
+## Social Media and Portfolio
+
+jcmagalhaes301@gmail.com
+
+[Linkedin](https://www.linkedin.com/in/jcmagalhaess/)
+
+[GitHub](https://github.com/jcmagalhaess/)
+
+## React DOCS
+
+This project was created with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 

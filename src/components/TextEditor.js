@@ -17,7 +17,7 @@ import { type } from 'react-icons-kit/feather/type'
 import { maximize2 } from 'react-icons-kit/feather/maximize2'
 import { download } from 'react-icons-kit/feather/download'
 
-import { BoldMark, ItalicMark, FormatToolbar, Alignment } from "./index"
+import { BoldMark, ItalicMark, FormatToolbar, Alignment, LinkCustom } from "./index"
 
 const initialValue = Value.fromJSON({
   document: {
@@ -132,17 +132,7 @@ export default class TextEditor extends Component {
       case 'underline':
         return <u { ...props.attributes }>{ props.children }</u>
       case 'link':
-        return (
-          <a
-            onClick={ console.log(props.mark.type) }
-            className={ props.mark.type }
-            target='_blank'
-            rel="noreferrer"
-            { ...props.attributes }
-          >
-            { props.children }
-          </a> 
-        )
+        return <LinkCustom { ...props } />
       case 'heading':
         return <h2 { ...props.attributes }>{ props.children }</h2>
       case 'left':
