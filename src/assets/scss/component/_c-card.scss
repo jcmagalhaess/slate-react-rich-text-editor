@@ -12,6 +12,10 @@ $component-name: 'c-card';
   border-radius: 10px;
   box-shadow: 0 0 10px rgba($color: #323232, $alpha: 0.6);
   font-size: x-large;
+  transition: ease .3s;
+  @include breakpoint(700) {
+    width: calc(var(--width) + 20vw)
+  }
   &--maximize {
     width: var(--width-maximize);
     height: var(--height-maximize);

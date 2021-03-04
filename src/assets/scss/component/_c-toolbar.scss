@@ -2,10 +2,30 @@ $component-name: 'c-toolbar';
 .#{$component-name} {
   display: flex;
   margin-top: 10px;
+  flex-flow: wrap;
   &__tooltip-button {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
     border: 0;
     background: none;
     cursor: pointer;
     color: #32323A;
+    border-radius: 10px;
+    &:hover {
+      background-color: #eee;
+    }
+    &:is(:active) {
+      background-color: #4ebefd;
+      color: #fff;
+    }
+    i {
+      display: flex !important;
+    }
+  }
+  @include breakpoint(700) {
+    justify-content: center;
   }
 }

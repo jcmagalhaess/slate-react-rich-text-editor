@@ -9,7 +9,8 @@ import { italic } from 'react-icons-kit/feather/italic'
 import { code } from 'react-icons-kit/feather/code'
 import { list } from 'react-icons-kit/feather/list'
 import { underline } from 'react-icons-kit/feather/underline'
-import { link2 } from 'react-icons-kit/feather/link2'
+import { link } from 'react-icons-kit/feather/link'
+import { tag } from 'react-icons-kit/feather/tag'
 import { alignLeft } from 'react-icons-kit/feather/alignLeft'
 import { alignCenter } from 'react-icons-kit/feather/alignCenter'
 import { alignRight } from 'react-icons-kit/feather/alignRight'
@@ -17,7 +18,7 @@ import { type } from 'react-icons-kit/feather/type'
 import { maximize2 } from 'react-icons-kit/feather/maximize2'
 import { download } from 'react-icons-kit/feather/download'
 
-import { BoldMark, ItalicMark, FormatToolbar, Alignment, LinkCustom } from "./index"
+import { BoldMark, ItalicMark, FormatToolbar, Alignment } from "./index"
 
 const initialValue = Value.fromJSON({
   document: {
@@ -59,109 +60,106 @@ export default class TextEditor extends Component {
 
   onKeyDown = (e, change) => {
 
-    if (!e.ctrlKey) { return }
+    if (!e.ctrlKey) return 
+
     e.preventDefault()
 
-    switch (e.key) {
-      case 'b': {
-        change.toggleMark('bold')
-        return true
-      }
+    switch(e.key) {
+			/* When "b" is pressed, add a "bold" mark to the text. */
+			case 'b': {
+				change.toggleMark('bold');
+				return true;
+			}
+			case 'i': {
+				change.toggleMark('italic');
+				return true;
+			}
 
-      case 'i': {
-        change.toggleMark('italic')
-        return true
-      }
+			case 'c': {
+				change.toggleMark('code');
+				return true;
+			}
 
-      case 'c': {
-        change.toggleMark('code')
-        return true
-      }
+			case 'l': {
+				change.toggleMark('list');
+				return true;
+			}
 
-      case 'k': {
-        change.toggleMark('list')
-        return true
-      }
+			case 'u': {
+				change.toggleMark('underline');
+				return true;
+			}
 
-      case 'u': {
-        change.toggleMark('underline')
-        return true
-      }
+			case 'q': {
+				change.toggleMark('quote');
+				return true;
+			}
 
-      case 'h': {
-        change.toggleMark('heading')
-        return true
-      }
+			case 'h': {
+				change.toggleMark('title');
+				return true;
+			}
 
-      case 'e': {
-        change.toggleMark('center')
-        return true
-      }
-
-      case 'l': {
-        change.toggleMark('left')
-        return true
-      }
-
-      case 'r': {
-        change.toggleMark('right')
-        return true
-      }
-    
-      default:
-        break;
+			default: {
+				return;
+			}
     }
 
   }
 
-  onMarkClick = (e, type) => {
-    e.preventDefault()
+	renderNode = (props) => {
+		switch (props.node.type) {
+			case 'link': {
+				console.log(props.node.data.get('href'));
+				return (
+					<a href={props.node.data.get('href')} {...props.attributes}>
+						{props.children}
+					</a>
+				);
+			}
 
-    const { value } = this.state
+			default: {
+				return;
+			}
+		}
+	};
 
-    const change = value.change().toggleMark(type)
-
-    this.onChange(change)
-  }
-  
-  urlLink = (props) => {
-    if ( props.mark.type === 'link' ) {
-      const url = prompt('Type your link: ')
-      return url;
-    }
-  }
   renderMark = (props) => {
     switch (props.mark.type) {
-      case 'bold':
-        return <BoldMark { ...props } />
-      case 'italic':
-        return <ItalicMark { ...props } />
-      case 'code':
-        return <code { ...props.attributes }>{ props.children }</code>
-      case 'list':
-        return (
-          <ul { ...props.attributes }>
-            <li>{ props.children }</li>
-          </ul>
-        )
-      case 'underline':
-        return <u { ...props.attributes }>{ props.children }</u>
-      case 'link':
-        return <LinkCustom value={ this.urlLink({ ...props }) } { ...props } />
-      case 'heading':
-        return <h2 { ...props.attributes }>{ props.children }</h2>
+			case 'bold':
+				return <BoldMark {...props} />;
+
+			case 'italic':
+				return <ItalicMark {...props} />;
+
+			case 'code':
+				return <code {...props.attributes}>{props.children}</code>;
+
+			case 'list':
+				return (
+					<ul {...props.attributes}>
+						<li>{props.children}</li>
+					</ul>
+				);
+
+			case 'underline':
+				return <u {...props.attributes}>{props.children}</u>;
+
+			case 'quote':
+				return <blockquote {...props.attributes}>{props.children}</blockquote>;
+
+			case 'title':
+				return <h1 {...props.attributes}>{props.children}</h1>;
+
       case 'left':
         return <Alignment { ...props } />
+
       case 'center':
         return <Alignment { ...props } />
+
       case 'right':
         return <Alignment { ...props } />
-      case 'blockquote':
-        return (
-          <blockquote { ...props.attributes }>
-            { props.children }
-          </blockquote>
-        )
+
       case 'maximize':
         return (
           this.maximize( ...props )
@@ -171,6 +169,88 @@ export default class TextEditor extends Component {
         break;
     }
   }
+
+	hasLinks = () => {
+		const { value } = this.state;
+    console.log(value.inlines.some((inline) => inline.type === 'link'))
+		return value.inlines.some((inline) => inline.type === 'link');
+	};
+
+	wrapLink = (change, href) => {
+		change.wrapInline({
+			type: 'link',
+			data: { href },
+		});
+
+		change.collapseToEnd();
+	};
+
+	unwrapLink = (change) => change.unwrapInline('link');
+
+	onLinkClick = (e) => {
+		/* disabling browser default behavior like page refresh, etc */
+		e.preventDefault();
+
+		const { value } = this.state;
+		const hasLinks = this.hasLinks();
+		const change = value.change();
+
+		if (hasLinks) {
+			// change.call(this.unwrapLink);
+      console.log(change.call(this.unwrapLink))
+		} else if (value.isExpanded) {
+			const href = window.prompt('Enter the URL of the link:');
+      console.log(href.length > 0 ? change.call(this.wrapLink, href) : null)
+			// return href.length > 0 ? change.call(this.wrapLink, href) : null;
+		} else {
+			const href = window.prompt('Enter the URL of the link:');
+			const text = window.prompt('Enter the text for the link:');
+
+			console.log(href.length > 0
+				? change
+						.insertText(text)
+						.extend(0 - text.length)
+						.call(this.wrapLink, href)
+				: null)
+		}
+
+		this.onChange(change);
+	};
+
+	renderLinkButton = (type, icon) => (
+		<button
+			onPointerDown={(e) => this.onLinkClick(e, type)}
+			className="c-toolbar__tooltip-button"
+		>
+			<Icon icon={icon} />
+		</button>
+	);
+
+	onMarkClick = (e, type) => {
+		/* disabling browser default behavior like page refresh, etc */
+		e.preventDefault();
+
+		/* grabbing the this.state.value */
+		const { value } = this.state;
+
+		/*
+			applying the formatting on the selected text
+			which the desired formatting
+		*/
+		const change = value.change().toggleMark(type);
+
+		/* calling the  onChange method we declared */
+		this.onChange(change);
+	};
+
+  renderMarkButton = (type, icon) => (
+		<button
+			onPointerDown={(e) => this.onMarkClick(e, type)}
+      className='c-toolbar__tooltip-button'
+		>
+			<Icon icon={icon} />
+		</button>
+  )
   
   render() {
 
@@ -184,64 +264,25 @@ export default class TextEditor extends Component {
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           renderMark={this.renderMark}
+					renderNode={this.renderNode}
           placeholder='Notes'
           ref={el => (this.componentRef = el)}
         />
         <FormatToolbar>
-          <button
-            onPointerDown={(e) => this.onMarkClick(e, 'code')}
-            className='c-toolbar__tooltip-button'>
-            <Icon icon={code} />
-          </button>
+					{this.renderMarkButton('code', code)}
           <div className="u-divider"></div>
-          <button
-            onPointerDown={(e) => this.onMarkClick(e, 'heading')}
-            className='c-toolbar__tooltip-button'>
-            <Icon icon={type} />
-          </button>
-          <button
-            onPointerDown={(e) => this.onMarkClick(e, 'bold')}
-            className='c-toolbar__tooltip-button'>
-            <Icon icon={bold} />
-          </button>
-          <button
-            onPointerDown={(e) => this.onMarkClick(e, 'italic')}
-            className='c-toolbar__tooltip-button'>
-            <Icon icon={italic} />
-          </button>
-          <button
-            onPointerDown={(e) => this.onMarkClick(e, 'underline')}
-            className='c-toolbar__tooltip-button'>
-            <Icon icon={underline} />
-          </button>
+					{this.renderMarkButton('title', type)}
+					{this.renderMarkButton('bold', bold)}
+					{this.renderMarkButton('italic', italic)}
+					{this.renderMarkButton('underline', underline)}
           <div className="u-divider"></div>
-          <button
-            onPointerDown={(e) => this.onMarkClick(e, 'left')}
-            className='c-toolbar__tooltip-button'>
-            <Icon icon={alignLeft} />
-          </button>
-          <button
-            onPointerDown={(e) => this.onMarkClick(e, 'center')}
-            className='c-toolbar__tooltip-button'>
-            <Icon icon={alignCenter} />
-          </button>
-          <button
-            onPointerDown={(e) => this.onMarkClick(e, 'right')}
-            className='c-toolbar__tooltip-button'>
-            <Icon icon={alignRight} />
-          </button>
+					{this.renderMarkButton('left', alignLeft)}
+					{this.renderMarkButton('center', alignCenter)}
+					{this.renderMarkButton('right', alignRight)}
           <div className="u-divider"></div>
-          <button
-            onPointerDown={(e) => this.onMarkClick(e, 'list')}
-            className='c-toolbar__tooltip-button'>
-            <Icon icon={list} />
-          </button>
-          <button
-            onPointerDown={(e) => this.onMarkClick(e, 'link')}
-            className='c-toolbar__tooltip-button'
-          >
-            <Icon icon={link2} />
-          </button>
+					{this.renderMarkButton('list', list)}
+					{this.renderMarkButton('quote', tag)}
+					{this.renderLinkButton('link', link)}
           <div className="u-divider"></div>
           <button
             onClick={() => handler('maximize')}
